@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 3_ Amaya Ortega_ IDSTV</title>
+</head>
+<style>
+    
+    canvas {
+        background-color: #77cae4;
+    }
+   
+</style>
+<body>
+
+    <canvas id = "canvas" width="700" height="700"></canvas>
+    <script>
+       const canvas = document.getElementById("canvas");
+       const ctx = canvas.getContext("2d");
+
+        ctx.beginPath();
+        ctx.moveTo(10,10);
+        ctx.rect(10,10,680,680);
+        ctx.stroke();
+
+
+       ctx.beginPath();
+       ctx.arc(300, 200, 150, 0, 2 * Math.PI);
+       ctx.fillStyle = "#cc3266";
+       ctx.fill();
+       ctx.stroke();
+
+       ctx.beginPath();
+       ctx.arc(500, 470, 150, 0, 2 * Math.PI);
+       ctx.stroke();
+       
+   </script>
+ 
+</body>
+</html>
