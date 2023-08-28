@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 20_ Amaya Ortega_ IDSTV</title>
+</head>
+<body>
+    <canvas id="canvas" width="700" height="700"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Fondo
+        ctx.fillStyle = 'lightblue';
+        ctx.fillRect(0, 0, 700, 700);
+
+        ctx.fillStyle = 'yellow';
+        ctx.beginPath();
+        ctx.arc(100, 100, 50, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = 'green';
+        ctx.fillRect(0, 500, 700, 200);
+
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.arc(330, 110, 30, 0, Math.PI * 2);
+        ctx.arc(360, 100, 30, 0, Math.PI * 2);
+        ctx.arc(390, 110, 30, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.arc(530, 90, 30, 0, Math.PI * 2);
+        ctx.arc(560, 80, 30, 0, Math.PI * 2);
+        ctx.arc(590, 90, 30, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+
+        //Casa
+        ctx.fillStyle = 'lightgray';
+        ctx.fillRect(300, 300, 200, 200);
+
+        ctx.fillStyle = 'red';
+        ctx.beginPath();
+        ctx.moveTo(300, 300);
+        ctx.lineTo(500, 300);
+        ctx.lineTo(400, 220);
+        ctx.fill();
+
+        ctx.fillStyle = 'brown';
+        ctx.fillRect(370, 420, 60, 80);
+
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(330, 350, 40, 40);
+
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(430, 350, 40, 40);
+
+        ctx.fillStyle = 'yellow';
+        ctx.beginPath();
+        ctx.arc(420, 460, 5, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+        
+        ctx.fillStyle = 'black';
+        ctx.beginPath();
+        ctx.arc(200, 180, 10, 4, Math.PI * 2);
+        ctx.arc(220, 190, 10, 4, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(400, 180, 10, 4, Math.PI * 2);
+        ctx.arc(420, 190, 10, 4, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(300, 210, 10, 4, Math.PI * 2);
+        ctx.arc(320, 220, 10, 4, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(100, 240, 10, 4, Math.PI * 2);
+        ctx.arc(120, 250, 10, 4, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+       
+        ctx.fillStyle = 'brown';
+
+        for (let i = 0; i < 10; i++) {
+            ctx.fillRect(50 + i * 80, 540, 10, 90);
+            ctx.fillRect(0 + i * 70, 560, 70, 10);
+            ctx.fillRect(0 + i * 70, 590, 90, 10);
+        }
+
+    </script>
+</body>
+</html>
