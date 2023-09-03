@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 30_ Amaya Ortega_ IDSTV</title>
+</head>
+<style>
+    canvas {
+        background-color: #77cae4;
+    }
+    body {
+        background-color: rgb(24, 26, 27);
+    }
+</style>
+<body>
+
+<canvas id="canvas" width="1000" height="700"></canvas>
+
+<script>
+    class Player {
+        constructor(ctx, x, y, speed) {
+            this.ctx = ctx;
+            this.x = x;
+            this.y = y;
+            this.speed = speed;
+            this.movement = "";
+        }
+
+        randomRgbColor() {
+            let r = Math.floor(Math.random() * 256);
+            let g = Math.floor(Math.random() * 256);
+            let b = Math.floor(Math.random() * 256);
+            return `rgba(${r},${g},${b})`;
+        }
+
+        draw(color) {
+            this.ctx.fillStyle = color;
+            this.ctx.fillRect(this.x, this.y, 50, 50);
+            this.ctx.strokeRect(this.x, this.y, 50, 50);
+        }
+
+        move(direction) {
+            this.movement = direction;
+        }
+
+        update(cw, ch, target, obstacles) {
+            const color = this.randomRgbColor();
+            this.draw(color);
+
+            switch (this.movement) {
+                case "up":
+                    this.y -= this.speed;
+                    if (this.y < 0) {
+                        this.y = ch;
+                    }
+                    break;
+                case "down":
+                    this.y += this.speed;
+                    if (this.y > ch) {
+                        this.y = -60;
+                    }
+                    break;
+                case "left":
+                    this.x -= this.speed;
+                    if (this.x < 0) {
+                        this.x = cw;
+                    }
+                    break;
+                case "right":
+                    this.x += this.speed;
+                    if (this.x > cw) {
+                        this.x = -60;
+                    }
+                    break;
+            }
+
+            if (this.x < target.x + 30 && this.x + 50 > target.x && this.y < target.y + 30 && this.y + 50 > target.y) {
+                do {
+                    target.updatePosition(cw, ch); 
+                } while (target.checkCollision(obstacles));
+            }
+
+            for (const obstacle of obstacles) {
+                if (this.checkCollision(obstacle)) {
+                    if (this.movement === "up" || this.movement === "down") {
+                        this.y = this.movement === "up" ? obstacle.y + obstacle.height : obstacle.y - 50;
+                    }
+                    if (this.movement === "left" || this.movement === "right") {
+                        this.x = this.movement === "left" ? obstacle.x + obstacle.width : obstacle.x - 50;
+                    }
+                    this.movement = "";
+                }
+            }
+        }
+
+        checkCollision(object) {
+            return (
+                this.x < object.x + object.width &&
+                this.x + 50 > object.x &&
+                this.y < object.y + object.height &&
+                this.y + 50 > object.y
+            );
+        }
+    }
+
+    class Target {
+        constructor(ctx, x, y) {
+            this.ctx = ctx;
+            this.x = x;
+            this.y = y;
+        }
+
+        draw() {
+            this.ctx.fillStyle = "rgb(210, 124, 241)";
+            this.ctx.fillRect(this.x, this.y, 30, 30);
+            this.ctx.strokeRect(this.x, this.y, 30, 30);
+        }
+
+        updatePosition(cw, ch) {
+            this.x = Math.random() * (cw - 15);
+            this.y = Math.random() * (ch - 15);
+        }
+
+        checkCollision(obstacles) {
+            for (const obstacle of obstacles) {
+                if (
+                    this.x < obstacle.x + obstacle.width &&
+                    this.x + 30 > obstacle.x &&
+                    this.y < obstacle.y + obstacle.height &&
+                    this.y + 30 > obstacle.y
+                ) {
+                    return true;
+                }
+            }
+            return false; 
+        }
+    }
+
+    class Obstacle {
+        constructor(ctx, x, y, width, height, color) {
+            this.ctx = ctx;
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.color = color;
+        }
+
+        draw() {
+            this.ctx.fillStyle = this.color;
+            this.ctx.fillRect(this.x, this.y, this.width, this.height);
+            this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+        }
+    }
+
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const cw = 1000, ch = 700;
+
+    const player = new Player(ctx, 275, 275, 2);
+    const target = new Target(ctx, 30, 30);
+    const obstacles = [
+        new Obstacle(ctx, 140, 80, 700, 50, "blue"),
+        new Obstacle(ctx, 140, 220, 700, 50, "green"),
+        new Obstacle(ctx, 140, 520, 700, 50, "red")
+    ];
+
+    ctx.beginPath();
+    ctx.moveTo(10, 10);
+    ctx.rect(10, 10, cw - 20, ch - 20);
+    ctx.stroke();
+
+    window.requestAnimationFrame = (function () {
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            function (callback) {
+                window.setTimeout(callback, 30);
+            };
+    }());
+
+    document.addEventListener("keydown", (event) => {
+        switch (event.keyCode) {
+            case 87:
+                player.move("up");
+                break;
+            case 83:
+                player.move("down");
+                break;
+            case 65:
+                player.move("left");
+                break;
+            case 68:
+                player.move("right");
+                break;
+            case 32:
+                player.speed += 5;
+                break;
+        }
+    });
+
+    function draw() {
+        player.draw();
+        target.draw();
+        for (const obstacle of obstacles) {
+            obstacle.draw();
+        }
+    }
+
+    function update() {
+
+        ctx.clearRect(0, 0, cw, ch);
+        player.update(cw, ch, target, obstacles);
+        draw();
+        requestAnimationFrame(update);
+    }
+
+    update();
+
+    function randomInteger(max) {
+        return Math.floor(Math.random() * (max + 1));
+    }
+</script>
+
+</body>
+</html>
