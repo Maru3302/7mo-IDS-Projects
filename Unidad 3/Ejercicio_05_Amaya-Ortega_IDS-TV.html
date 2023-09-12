@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio_05_Amaya-Ortega_IDS-TV</title>
+</head>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin-left: 20px;
+      margin-top: 10px;
+      display: flex;
+      align-items:baseline;
+      height: 100vh;
+    }
+    #app {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    button {
+      background-color: #9a66cd;
+      border-color: #9a66cd;
+      align-items: center;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 4px;
+      color: #f0f0f0;
+      font-family: Impact;
+    }
+    label {
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="number"] {
+      padding: 5px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    h1 {
+      margin-top: 10px;
+      font-size: 24px;
+      font-family: Tahoma;
+    }
+  </style>
+<body>
+  <div id="app">
+    
+    <button @click="incrementClicks">Click me {{ clickCount }} </button>
+
+    <h1> Hola {{ userName }}</h1>
+    <div>
+        <label for="nameInput">Tu Nombre:</label>
+        <input type="text" id="nameInput" v-model="userName">
+    </div>
+    <div>
+      <label for="num1">Número 1:</label>
+      <input type="number" id="num1" v-model.number="num1">
+    </div>
+    <div>
+      <label for="num2">Número 2:</label>
+      <input type="number" id="num2" v-model.number="num2">
+    </div>
+    
+    <button @click="showSum">Sumar</button>
+    
+    <h1 v-if="sumVisible">La suma es: {{ sum }}</h1>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        clickCount: 0,
+        userName: ' ', 
+        num1: 0,
+        num2: 0,
+        sumVisible: false
+      },
+      computed: {
+        sum: function() {
+          return this.num1 + this.num2;
+        }
+      },
+      methods: {
+        incrementClicks: function() {
+          this.clickCount++;
+        },
+        showSum: function() {
+          this.sumVisible = true;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
