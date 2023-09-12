@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 16_ Amaya Ortega_ IDSTV</title>
+</head>
+<style>
+    
+    canvas {
+        background-color: #77cae4;
+    }
+   
+</style>
+<body>
+
+    <canvas id = "canvas" width="700" height="700"></canvas>
+    <script>
+
+        const randomRgbColor = () => {
+
+            let r = Math.floor(Math.random() * 256); 
+            let g = Math.floor(Math.random() * 256); 
+            let b = Math.floor(Math.random() * 256);
+            return 'rgba(' + r + ',' + g + ',' + b + ', 0.75)';
+            
+        };
+
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        let color = randomRgbColor(); 
+        ctx.fillStyle = color;
+
+        let esCirculo = true;
+        let esPresionado = false;
+
+        ctx.beginPath();
+        ctx.moveTo(10,10);
+        ctx.rect(10,10,680,680);
+        ctx.stroke();
+
+        addEventListener("mousedown", function(event) {
+            esPresionado = true;
+
+            if (esCirculo) {
+                ctx.beginPath();
+                ctx.arc(event.clientX, event.clientY, 50, 0, 2 * Math.PI);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.stroke();
+            } else {
+            
+                ctx.beginPath();
+                ctx.rect(event.clientX - 50, event.clientY -50 , 100, 100);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.stroke();
+            }
+
+        });
+
+        addEventListener("mouseover", function(event) {
+
+            color = randomRgbColor();
+            ctx.fillStyle = color;
+
+        });
+
+        canvas.addEventListener("mouseout", function() {
+
+            esCirculo = !esCirculo;
+
+        });
+
+        addEventListener("mousemove", function(event) {
+
+            if (esPresionado) { 
+                ctx.beginPath();
+                ctx.arc(event.clientX, event.clientY, 1, 0, 2 * Math.PI);
+                ctx.fillStyle = "black";
+                ctx.fill();
+                ctx.stroke();
+            }
+            
+        });
+
+        addEventListener("mouseup", function() {
+            esPresionado = false; 
+        });
+
+    </script>
+ 
+</body>
+</html>

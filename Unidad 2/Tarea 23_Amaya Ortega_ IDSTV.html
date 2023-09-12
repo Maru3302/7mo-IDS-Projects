@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 23_ Amaya Ortega_ IDSTV</title>
+</head>
+<style>
+    
+    canvas {
+        background-color: #77cae4;
+    }
+   
+</style>
+<body>
+
+    <canvas id = "canvas" width="700" height="700"></canvas>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        var x = 225, y = 225; 
+        var color; 
+        var movement = "";
+
+        ctx.beginPath();
+        ctx.moveTo(10,10);
+        ctx.rect(10,10,680,680);
+        ctx.stroke();
+
+        window.requestAnimationFrame = (function () {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback,30);
+                };
+        }());
+
+        document.addEventListener("keydown", (event) => {
+            
+            /* nota, en el anterior ejercicio use otros key code debido a que los asigne a las  flechas
+            y no al awsd,una disculpa de antemano */
+            switch (event.keyCode) {
+                case 87: 
+                    movement = "up";
+                    break;
+                case 83: 
+                    movement = "down";
+                    break;
+                case 65: 
+                    movement = "left";
+                    break;
+                case 68: 
+                    movement = "right";
+                    break;
+          
+            }
+            draw();
+            
+        });
+
+        ctx.fillStyle = "red";
+        ctx.fillRect(x, y, 50, 50);
+
+        const randomRgbColor = () => {
+
+            let r = Math.floor(Math.random() * 256); 
+            let g = Math.floor(Math.random() * 256); 
+            let b = Math.floor(Math.random() * 256);
+            return 'rgba(' + r + ',' + g + ',' + b + ')';
+
+        };
+
+        function draw() {
+
+            ctx.fillStyle = "#77cae4";
+            ctx.fillRect(0, 0, 700, 700)
+
+            ctx.beginPath();
+            ctx.moveTo(10,10);
+            ctx.rect(10,10,680,680);
+            ctx.stroke();
+
+            color = randomRgbColor();
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, 50, 50);
+        }
+
+        function update() {
+
+             switch (movement) {
+                case "up":
+                    if (y > 20) {
+                        y -= 10;
+                    }
+                    break;
+                case "down":
+                    if (y < 630) {
+                        y += 10;
+                    }
+                    break;
+                case "left":
+                    if (x > 20) {
+                        x -= 10;
+                    }
+                    break;
+                case "right":
+                    if (x < 630) {
+                        x += 10;
+                    }
+                    break;
+            }
+            draw();
+            requestAnimationFrame(update);
+        }
+
+        update();
+
+    </script>
+    
+</body>
+</html>
+
