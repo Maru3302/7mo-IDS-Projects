@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio_07_Amaya-Ortega_IDS-TV</title>
+</head>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin-left: 20px;
+      margin-top: 10px;
+      display: flex;
+      align-items:baseline;
+      height: 100vh;
+    }
+    #app {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    button {
+      background-color: #9a66cd;
+      border-color: #9a66cd;
+      align-items: center;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 4px;
+      color: #f0f0f0;
+      font-family: Impact;
+    }
+    label {
+      font-weight: bold;
+    }
+    input[type="text"] {
+      padding: 5px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    h1 {
+      margin-top: 10px;
+      font-size: 24px;
+      font-family: Tahoma;
+    }
+    ul li{
+        font-size: 24px;
+        font-family: Tahoma;
+
+    }
+  </style>
+<body>
+  <div id="app">
+    <div>
+        <label for="newUserNameInput">Nombre:</label>
+        <input type="text" id="newUserNameInput" v-model="newUserName">
+        <label for="newUserLastNameInput">Apellido:</label>
+        <input type="text" id="newUserLastNameInput" v-model="newUserLastName">
+        <button @click="addUserToList">Agregar</button>
+    </div>
+    <div>
+      <h2>Integrantes del equipo #2: </h2>
+      <ul>
+        <li v-for="(item, index) in itemList" :key="index +1">{{ item }}</li>
+      </ul>
+    </div>  
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        itemList: [],
+        newUserName: '',
+        newUserLastName: '',
+      },
+      methods: {
+        addUserToList: function() {
+          if (this.newUserName.trim() !== '' && this.newUserLastName.trim() !== '') {
+            const fullName = this.newUserName + ' ' + this.newUserLastName;
+            this.itemList.push( fullName );
+            this.newUserName = '';
+            this.newUserLastName = '';
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
