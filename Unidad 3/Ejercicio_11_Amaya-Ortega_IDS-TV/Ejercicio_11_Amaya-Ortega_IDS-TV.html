@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio_05_Amaya-Ortega_IDS-TV</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    #app {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    button {
+      background-color: #9a66cd;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 4px;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 90%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+    }
+    h1 {
+      font-size: 24px;
+      font-family: Tahoma, sans-serif;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <form>
+      <label for="email">Email</label>
+      <input type="text" v-model="email" placeholder="Enter email" name="email">
+      <label for="password">Password</label>
+      <input type="password" v-model="password" placeholder="Enter password" name="password">
+      <button type="button" @click="login()">Access</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+  <script>
+    new Vue({
+      el: "#app",
+      data() {
+        return {
+          email: '',
+          password: '',
+        };
+      },
+      methods: {
+        async login() {
+          console.log("hola");
+          const response = await fetch("users.json");
+          const users = await response.json();
+          let loggedIn = false;
+
+          users.forEach((user) => {
+            if (this.email === user.email && this.password === user.pass) {
+              alert("¡Bienvenido, " + user.name + "!");
+              loggedIn = true;
+            }
+          });
+
+          if (!loggedIn) {
+            alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+          }
+        },
+      },
+    });
+  </script>
+</body>
+</html>

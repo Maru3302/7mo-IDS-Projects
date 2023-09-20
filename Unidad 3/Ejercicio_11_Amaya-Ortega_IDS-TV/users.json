@@ -1,0 +1,20 @@
+[   
+    {
+        "name":"Manuel",
+        "lastName":"Amaya",
+        "email":"maam_20@uabcs.mx",
+        "pass":"gatete1"
+    },
+    {
+        "name":"Eduardo",
+        "lastName":"Amaya",
+        "email":"sandia@outlook.com",
+        "pass":"1234"
+    },
+    {
+        "name":"Erubiel",
+        "lastName":"Perez",
+        "email":"apostarman@gmail.com",
+        "pass":"dosientos"
+    }
+]
