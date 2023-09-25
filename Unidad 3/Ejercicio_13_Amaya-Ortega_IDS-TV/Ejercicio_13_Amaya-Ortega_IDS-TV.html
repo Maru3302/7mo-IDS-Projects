@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio_13_Amaya-Ortega_IDS-TV</title>
+  <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        }
+        #app {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        button {
+        background-color: #9a66cd;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 10px;
+        border-radius: 4px;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        }
+        label {
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+        }
+        input[type="text"],
+        input[type="password"] {
+        width: 90%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        outline: none;
+        }
+        h1 {
+        font-size: 24px;
+        font-family: Tahoma, sans-serif;
+        margin-bottom: 20px;
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+        }
+
+        th, td {
+          border: 1px solid #ccc;
+          padding: 8px;
+          text-align: center;
+        }
+
+        th {
+          background-color: #f0f0f0;
+          font-weight: bold;
+        }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <template v-if="!isLoggedIn">
+      <form>
+        <label for="email">Email</label>
+            <input type="text" v-model="email" placeholder="Enter email" name="email">
+            <label for="password">Password</label>
+            <input type="password" v-model="password" placeholder="Enter password" name="password">
+            <button type="button" @click="login()">Access</button>
+      </form>
+    </template>
+    <template v-else>
+      <h1>Hola {{ username }}</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Telefono</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(user, index) in users" :key="index">
+            <td>{{ user.name }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phone }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button @click="logout">Cerrar sesión</button>
+    </template>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+  <script>
+    new Vue({
+      el: "#app",
+      data() {
+        return {
+          email: '',
+          password: '',
+          isLoggedIn: false,
+          username: '',
+          users: [],
+        };
+      },
+      methods: {
+        async login() {
+          const response = await fetch("users.json");
+          const users = await response.json();
+          
+          users.forEach((user) => {
+            if (this.email === user.email && this.password === user.pass) {
+              this.isLoggedIn = true;
+              this.username = user.name + " " + user.lastName;
+              localStorage.setItem('isLoggedIn', 'true');
+              localStorage.setItem('username', user.name);
+              return;
+            }
+          });
+
+          if (!this.isLoggedIn) {
+            alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+          }
+        },
+        logout() {
+          this.isLoggedIn = false;
+          this.username = '';
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('username');
+        },
+      },
+      created() {
+        const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
+        const storedUsername = localStorage.getItem('username');
+        if (storedIsLoggedIn === 'true' && storedUsername) {
+          this.isLoggedIn = true;
+          this.username = storedUsername;
+          fetch("users.json")
+            .then(response => response.json())
+            .then(data => {
+              this.users = data;
+            })
+            .catch(error => {
+              console.error("Error al cargar los usuarios:", error);
+            });
+        }
+      },
+    });
+  </script>
+</body>
+</html>

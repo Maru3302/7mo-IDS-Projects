@@ -1,0 +1,108 @@
+[
+    {
+      "name": "Manuel",
+      "lastName": "Amaya",
+      "email": "manama@example.com",
+      "phone": "+1 (123) 456-7890",
+      "pass": "1234"
+    },
+    {
+      "name": "María",
+      "lastName": "Gómez",
+      "email": "maria.gomez@example.com",
+      "phone": "+1 (234) 567-8901",
+      "pass": "6254"
+    },
+    {
+      "name": "Carlos",
+      "lastName": "López",
+      "email": "carlos.lopez@example.com",
+      "phone": "+1 (345) 678-9012",
+      "pass": "4321"
+    },
+    {
+      "name": "Ana",
+      "lastName": "Martínez",
+      "email": "ana.martinez@example.com",
+      "phone": "+1 (456) 789-0123",
+      "pass": "6248"
+    },
+    {
+      "name": "Luis",
+      "lastName": "Rodríguez",
+      "email": "luis.rodriguez@example.com",
+      "phone": "+1 (567) 890-1234",
+      "pass": "4851"
+    },
+    {
+      "name": "Laura",
+      "lastName": "Sánchez",
+      "email": "laura.sanchez@example.com",
+      "phone": "+1 (678) 901-2345",
+      "pass": "6752"
+    },
+    {
+      "name": "Pedro",
+      "lastName": "Fernández",
+      "email": "pedro.fernandez@example.com",
+      "phone": "+1 (789) 012-3456",
+      "pass": "3245"
+    },
+    {
+      "name": "Isabel",
+      "lastName": "García",
+      "email": "isabel.garcia@example.com",
+      "phone": "+1 (890) 123-4567",
+      "pass": "6219"
+    },
+    {
+      "name": "Manuel",
+      "lastName": "Hernández",
+      "email": "manuel.hernandez@example.com",
+      "phone": "+1 (901) 234-5678",
+      "pass": "6666"
+    },
+    {
+      "name": "Sofía",
+      "lastName": "Díaz",
+      "email": "sofia.diaz@example.com",
+      "phone": "+1 (012) 345-6789",
+      "pass": "6545"
+    },
+    {
+      "name": "Diego",
+      "lastName": "Moreno",
+      "email": "diego.moreno@example.com",
+      "phone": "+1 (123) 456-7890",
+      "pass": "0687"
+    },
+    {
+      "name": "Elena",
+      "lastName": "Pérez",
+      "email": "elena.perez@example.com",
+      "phone": "+1 (234) 567-8901",
+      "pass": "9514"
+    },
+    {
+      "name": "Javier",
+      "lastName": "Ramírez",
+      "email": "javier.ramirez@example.com",
+      "phone": "+1 (345) 678-9012",
+      "pass": "1547"
+    },
+    {
+      "name": "Carmen",
+      "lastName": "López",
+      "email": "carmen.lopez@example.com",
+      "phone": "+1 (456) 789-0123",
+      "pass": "6154"
+    },
+    {
+      "name": "Miguel",
+      "lastName": "Gómez",
+      "email": "miguel.gomez@example.com",
+      "phone": "+1 (567) 890-1234",
+      "pass": "0000"
+    }
+  ]
+  
