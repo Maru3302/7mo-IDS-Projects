@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Películas Populares</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    #app {
+      background-color: #fff;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .movie-card {
+      width: calc(40% - 10px);
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 40px; 
+      text-align: center;
+      background-color: #fff;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #9a66cd;
+      text-align: center;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .rating-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .rating-input {
+      margin-right: 10px;
+    }
+  </style>
+<body>
+  <div id="app">
+    <h1>Películas Populares</h1>
+    <div v-for="movie in movies" :key="movie.id" class="movie-card">
+      <h2>{{ movie.title }}</h2>
+      <img :src="'https://image.tmdb.org/t/p/w200' + movie.poster_path" alt="Movie Poster">
+      <p>{{ movie.overview }}</p>
+      <p>Popularidad: {{ movie.popularity }}</p>
+      <p v-if="userRating[movie.id] >= 1 && userRating[movie.id] <= 10">Calificación de Usuario: {{ userRating[movie.id] }}</p>
+
+      <div class="rating-section">
+        <input type="number" v-model="userRating[movie.id]" min="1" max="10" placeholder="Calificación (1-10)" class="rating-input">
+        <button v-if="userRating[movie.id] >= 1 && userRating[movie.id] <= 10" @click="addRating(movie.id, userRating[movie.id])">Calificar</button>
+        <button @click="deleteRating(movie.id)">Eliminar Calificación</button>
+       
+      </div>
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+      el: "#app",
+      data() {
+        return {
+          movies: [],
+          userRating: {} 
+        };
+      },
+      mounted() {
+        var myHeaders = new Headers();
+        myHeaders.append("Accept", "application/json");
+        myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYzVmZTNhMzdlMmY1MjNiODU2MDc0YzhjNGFlY2ZiNiIsInN1YiI6IjY1MTRiN2FkYmRkNTY4MDBjN2NmMWRiMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mzyx43TScT9LzJyJfvo6ylBGLqoKo7vcR6u2jpt5GK4");
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };
+
+        fetch("https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc", requestOptions)
+          .then(response => response.json())
+          .then(result => {
+            this.movies = result.results; 
+          })
+          .catch(error => console.log('error', error));
+      },
+      methods: {
+        addRating(movieId, rating) {
+          const sessionId = 'maru3302'; 
+          
+          const myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json;charset=utf-8");
+          myHeaders.append("Accept", "application/json");
+          myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYzVmZTNhMzdlMmY1MjNiODU2MDc0YzhjNGFlY2ZiNiIsInN1YiI6IjY1MTRiN2FkYmRkNTY4MDBjN2NmMWRiMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mzyx43TScT9LzJyJfvo6ylBGLqoKo7vcR6u2jpt5GK4");          const raw = JSON.stringify({ value: rating });
+
+          const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
+
+          const url = `https://api.themoviedb.org/3/movie/${movieId}/rating`;
+          
+          fetch(url, requestOptions)
+            .then(response => response.text())
+            .then(result => {
+              console.log(result);
+            })
+            .catch(error => console.log('error', error));
+        },
+        deleteRating(movieId) {
+          console.log(`Eliminando calificación para la película con ID ${movieId}`);
+          this.$set(this.userRating, movieId, null);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

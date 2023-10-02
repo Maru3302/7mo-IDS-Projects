@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movies</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    #app {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    button {
+      background-color: #9a66cd;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 4px;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+    }
+    h1 {
+      font-size: 24px;
+      font-family: Tahoma, sans-serif;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <template v-if="!isLoggedIn">
+      <form action="#" @submit.prevent ="validateAndLogin">
+        <label for="email">Email</label>
+        <input type="text" v-model="email" placeholder="Enter email" name="email" required>
+        <label for="password">Password</label>
+        <input type="password" v-model="password" placeholder="Enter password" name="password" required>
+        <button type="submit" >Access</button>
+      </form>
+    </template>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el: "#app",
+      data() {
+        return {
+          email: "", 
+          password: "",
+          isLoggedIn: false,
+          username: "",
+        };
+      },
+      methods: {
+        async validateAndLogin() {
+        if (!this.email || !this.password) {
+          alert("Por favor, completa ambos campos.");
+          return;
+        }
+        this.login();
+      },
+      async login() {
+          var myHeaders = new Headers();
+          myHeaders.append("Accept", "application/json");
+          myHeaders.append("Content-Type", "application/json");
+          myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYzVmZTNhMzdlMmY1MjNiODU2MDc0YzhjNGFlY2ZiNiIsInN1YiI6IjY1MTRiN2FkYmRkNTY4MDBjN2NmMWRiMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mzyx43TScT9LzJyJfvo6ylBGLqoKo7vcR6u2jpt5GK4");
+
+          var raw = JSON.stringify({
+            "username": "maru3302",
+            "password": "Mamaya03@UwU",
+            "request_token": "",
+          });
+  
+          var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
+  
+          try {
+            const response = await fetch("https://api.themoviedb.org/3/authentication/token/validate_with_login", requestOptions);
+  
+            if (response.ok) {
+              this.isLoggedIn = true;
+              this.username = "maru3302"; 
+              localStorage.setItem('isLoggedIn', 'true');
+              localStorage.setItem('username', this.username);
+              window.location.href = 'peliculas.html';
+            } else {
+              this.isLoggedIn = false;
+              this.username = '';
+              localStorage.removeItem('isLoggedIn');
+              localStorage.removeItem('username');
+              alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        },
+        logout() {
+          this.isLoggedIn = false;
+          this.username = '';
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('username');
+        },
+      },
+    },
+    );
+  </script>
+  
+</body>
+</html>
